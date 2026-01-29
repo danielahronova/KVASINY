@@ -12,7 +12,7 @@
 
     <h1>Registrace na letní turnaj VK Kvasiny 2026</h1>
 
-    <form id = "registrationForm" action = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSd01ckOxP46ydi2MhxtUoIhD2cdXpSEW3REKHsng09LGesquQ/formResponse" method = "post">
+    <form id = "registrationForm" action = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSd01ckOxP46ydi2MhxtUoIhD2cdXpSEW3REKHsng09LGesquQ/formResponse" method = "post" target = "hidden_iframe">
 
         <div class = "field team">
             <label for = "team">Název týmu</label>
@@ -44,7 +44,7 @@
         </div>
 
         <div class = "field button">
-            <button type = "submit" id = "submitBtn">
+            <button type = "button" id = "submitBtn">
             Přihlásit tým
             </button>
         </div>
@@ -53,12 +53,14 @@
         
 
     </form>
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+
 </div>
 </div>
 
 
 <script>
-
+    
     const form = document.getElementById("registrationForm");
     const teamInput = document.getElementById("team");
     const category = document.getElementById("category");
@@ -68,34 +70,34 @@
     const formMessage = document.getElementById("formMessage");
     const submitBtn = document.getElementById("submitBtn");
 
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
+    submitBtn.addEventListener("click", function () {
+    
 
-        if (teamInput.value === "") {
+        if (teamInput.value.trim === "") {
             formMessage.textContent = "Zadejte název týmu";
             teamInput.focus();
             return;
         }
 
-        if (category.value === "") {
+        if (category.value.trim === "") {
             formMessage.textContent = "Vyberte kategorii";
             category.focus();
             return;
         }
 
-        if (contactPerson.value === "") {
+        if (contactPerson.value.trim === "") {
             formMessage.textContent = "Zadejte jméno kontaktní osoby";
             contactPerson.focus();
             return;
         }
 
-        if (phoneNumber.value === "") {
+        if (phoneNumber.value.trim === "") {
             formMessage.textContent = "Zadejte telefonní číslo";
             phoneNumber.focus();
             return;
         }
 
-        if (email.value === "") {
+        if (email.value.trim === "") {
             formMessage.textContent = "Zadejte e-mail";
             email.focus();
             return;
@@ -108,7 +110,10 @@
         }
 
         formMessage.textContent = "Děkujeme za registraci";
-        form.reset();
+        setTimeout(function () {
+        form.submit();   // odešle do Google
+        form.reset();    // vyčistí pole
+        }, 200);
 
 
     })
