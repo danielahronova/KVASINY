@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="cs-cz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrační formulář letní turnaj Kvasiny 2026</title>
+    <link rel = "stylesheet" href = style.css>
+</head>
+<body>
+<div class = "page">
+<div class = "form-wrapper">
+
+    <h1>Registrace na letní turnaj VK Kvasiny 2026</h1>
+
+    <form id = "registrationForm" action = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSd01ckOxP46ydi2MhxtUoIhD2cdXpSEW3REKHsng09LGesquQ/formResponse" method = "post">
+
+        <div class = "field team">
+            <label for = "team">Název týmu</label>
+            <input type = "text" id = "team" name = "entry.898989511" required size="30">
+        </div>
+
+         <div class = "field category">
+            <label for = "category">Kategorie</label>
+            <select id = "category" name = "entry.1304973532" required>
+                <option value ="">-- Vyber kategorii --</option>
+                <option value = "zeny">Ženy</option>
+                <option value = "muzi">Muži</option>
+            </select>
+        </div>
+
+        <div class = "field contact-person">
+            <label for = "contactPerson">Kontaktní osoba</label>
+            <input type = "text" id = "contactPerson" name = "entry.1854769312" required size="30">
+        </div>
+        
+        <div class = "field phone-number">
+            <label for = "phoneNumber">Telefonní číslo</label>
+            <input type = "tel" id = "phoneNumber" name = "entry.1141964298" required size="9">
+        </div>
+
+        <div class = "field email">
+            <label for = "email">E-mail</label>
+            <input type = "email" id ="email" name = "entry.1384046425" required size="25">
+        </div>
+
+        <div class = "field button">
+            <button type = "submit" id = "submitBtn">
+            Přihlásit tým
+            </button>
+        </div>
+
+        <div id = "formMessage"></div>
+        
+
+    </form>
+</div>
+</div>
+
+
+<script>
+
+    const form = document.getElementById("registrationForm");
+    const teamInput = document.getElementById("team");
+    const category = document.getElementById("category");
+    const contactPerson = document.getElementById("contactPerson");
+    const phoneNumber = document.getElementById("phoneNumber");
+    const email = document.getElementById("email");
+    const formMessage = document.getElementById("formMessage");
+    const submitBtn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        if (teamInput.value === "") {
+            formMessage.textContent = "Zadejte název týmu";
+            teamInput.focus();
+            return;
+        }
+
+        if (category.value === "") {
+            formMessage.textContent = "Vyberte kategorii";
+            category.focus();
+            return;
+        }
+
+        if (contactPerson.value === "") {
+            formMessage.textContent = "Zadejte jméno kontaktní osoby";
+            contactPerson.focus();
+            return;
+        }
+
+        if (phoneNumber.value === "") {
+            formMessage.textContent = "Zadejte telefonní číslo";
+            phoneNumber.focus();
+            return;
+        }
+
+        if (email.value === "") {
+            formMessage.textContent = "Zadejte e-mail";
+            email.focus();
+            return;
+        }
+
+        if (!email.includes("@")) {
+            formMessage.textContent = "E-mail není platný";
+            email.focus();
+            return;
+        }
+
+        formMessage.textContent = "Děkujeme za registraci";
+        form.reset();
+
+
+    })
+</script>
+    
+</body>
+</html>
