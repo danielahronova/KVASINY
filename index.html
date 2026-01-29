@@ -12,7 +12,7 @@
 
     <h1>Registrace na letní turnaj VK Kvasiny 2026</h1>
 
-    <form id = "registrationForm" action = "https://docs.google.com/forms/u/0/d/e/1FAIpQLSd01ckOxP46ydi2MhxtUoIhD2cdXpSEW3REKHsng09LGesquQ/formResponse" method = "post" target = "hidden_iframe">
+    <form id = "registrationForm">
 
         <div class = "field team">
             <label for = "team">Název týmu</label>
@@ -53,7 +53,7 @@
         
 
     </form>
-    <iframe name="hidden_iframe" style="display:none;"></iframe>
+   
 
 </div>
 </div>
@@ -73,31 +73,31 @@
     submitBtn.addEventListener("click", function () {
     
 
-        if (teamInput.value.trim === "") {
+        if (teamInput.value.trim() === "") {
             formMessage.textContent = "Zadejte název týmu";
             teamInput.focus();
             return;
         }
 
-        if (category.value.trim === "") {
+        if (category.value.trim() === "") {
             formMessage.textContent = "Vyberte kategorii";
             category.focus();
             return;
         }
 
-        if (contactPerson.value.trim === "") {
+        if (contactPerson.value.trim() === "") {
             formMessage.textContent = "Zadejte jméno kontaktní osoby";
             contactPerson.focus();
             return;
         }
 
-        if (phoneNumber.value.trim === "") {
+        if (phoneNumber.value.trim() === "") {
             formMessage.textContent = "Zadejte telefonní číslo";
             phoneNumber.focus();
             return;
         }
 
-        if (email.value.trim === "") {
+        if (email.value.trim() === "") {
             formMessage.textContent = "Zadejte e-mail";
             email.focus();
             return;
@@ -109,11 +109,29 @@
             return;
         }
 
-        formMessage.textContent = "Děkujeme za registraci";
-        setTimeout(function () {
-        form.submit();   // odešle do Google
-        form.reset();    // vyčistí pole
-        }, 200);
+    const data = {
+    team: teamInput.value.trim(),
+    category: category.value,
+    contactPerson: contactPerson.value.trim(),
+    phone: phoneNumber.value.trim(),
+    email: email.value.trim()
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbz2t-iBtX1uQOZpF8j-58R2GZBOu5HK2Um6WLZTDSrsGQW9dqDrE1-3AVuJSIt-5hOU_g/exec", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(res => res.json())
+  .then(res => {
+    formMessage.textContent = "Děkujeme za registraci!";
+    form.reset();
+  })
+  .catch(err => {
+    formMessage.textContent = "Chyba při odeslání";
+  });
 
 
     })
