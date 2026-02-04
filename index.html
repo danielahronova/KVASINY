@@ -12,16 +12,17 @@
 
     <h1>Registrace na letní turnaj VK Kvasiny 2026</h1>
 
-    <form id = "registrationForm">
+    <form id = "registrationForm"method="POST" action="https://script.google.com/macros/s/AKfycbwnOlFRc7noW3BgLpYeaMtUA33HFmYuLGnzQuOdjr-nZkLJWeP_1vEqMFMaNIBdAQDeMw/exec" target="hidden_iframe">
+>
 
         <div class = "field team">
             <label for = "team">Název týmu</label>
-            <input type = "text" id = "team" name = "entry.898989511" required size="30">
+            <input type = "text" id = "team" name = "team" required size="30">
         </div>
 
          <div class = "field category">
             <label for = "category">Kategorie</label>
-            <select id = "category" name = "entry.1304973532" required>
+            <select id = "category" name = "category" required>
                 <option value ="">-- Vyber kategorii --</option>
                 <option value = "zeny">Ženy</option>
                 <option value = "muzi">Muži</option>
@@ -30,21 +31,21 @@
 
         <div class = "field contact-person">
             <label for = "contactPerson">Kontaktní osoba</label>
-            <input type = "text" id = "contactPerson" name = "entry.1854769312" required size="30">
+            <input type = "text" id = "contactPerson" name = "contactPerson" required size="30">
         </div>
         
         <div class = "field phone-number">
             <label for = "phoneNumber">Telefonní číslo</label>
-            <input type = "tel" id = "phoneNumber" name = "entry.1141964298" required size="9">
+            <input type = "tel" id = "phoneNumber" name = "phone" required size="9">
         </div>
 
         <div class = "field email">
             <label for = "email">E-mail</label>
-            <input type = "email" id ="email" name = "entry.1384046425" required size="25">
+            <input type = "email" id ="email" name = "email" required size="25">
         </div>
 
         <div class = "field button">
-            <button type = "button" id = "submitBtn">
+            <button type = "submit" id = "submitBtn">
             Přihlásit tým
             </button>
         </div>
@@ -53,6 +54,7 @@
         
 
     </form>
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
    
 
 </div>
@@ -70,7 +72,7 @@
     const formMessage = document.getElementById("formMessage");
     const submitBtn = document.getElementById("submitBtn");
 
-    submitBtn.addEventListener("click", function () {
+    form.addEventListener("submit", function (e) {
     
 
         if (teamInput.value.trim() === "") {
@@ -103,36 +105,18 @@
             return;
         }
 
-        if (!email.includes("@")) {
+        if (!email.value.includes("@")) {
             formMessage.textContent = "E-mail není platný";
             email.focus();
             return;
         }
+
+        formMessage.textContent = "Děkujeme za registraci!";
+        setTimeout(() => form.reset(), 500);
         })
 
-    const data = {
-    team: teamInput.value.trim(),
-    category: category.value,
-    contactPerson: contactPerson.value.trim(),
-    phone: phoneNumber.value.trim(),
-    email: email.value.trim()
-  };
-
-  fetch("https://script.google.com/macros/s/AKfycbz2t-iBtX1uQOZpF8j-58R2GZBOu5HK2Um6WLZTDSrsGQW9dqDrE1-3AVuJSIt-5hOU_g/exec", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-  .then(res => res.json())
-  .then(res => {
-    formMessage.textContent = "Děkujeme za registraci!";
-    form.reset();
-  })
-  .catch(err => {
-    formMessage.textContent = "Chyba při odeslání";
-  });
+   
+ 
 
 
     
